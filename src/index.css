@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  overflow-x: hidden;
+}
+
+/* --- Neon Glow Effects --- */
+.neon-text-blue {
+  text-shadow:
+    0 0 5px rgba(0, 191, 255, 0.8),
+    0 0 10px rgba(0, 191, 255, 0.8),
+    0 0 20px rgba(0, 191, 255, 0.8),
+    0 0 40px rgba(0, 191, 255, 0.6),
+    0 0 80px rgba(0, 191, 255, 0.6);
+}
+
+.neon-text-purple {
+  text-shadow:
+    0 0 5px rgba(160, 32, 240, 0.8),
+    0 0 10px rgba(160, 32, 240, 0.8),
+    0 0 20px rgba(160, 32, 240, 0.8);
+}
+
+.neon-border-blue {
+  border: 2px solid #00BFFF;
+  box-shadow: 0 0 10px #00BFFF, inset 0 0 10px #00BFFF;
+}
+
+.neon-border-purple {
+  border: 2px solid #A020F0;
+  box-shadow: 0 0 10px #A020F0, inset 0 0 10px #A020F0;
+}
+
+/* --- Background Grid --- */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0,191,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,191,255,0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* --- Section Title --- */
+.section-title {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* --- Event Card Hover --- */
+.event-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-color: rgba(0, 191, 255, 0.3);
+}
+
+.event-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-color: #00BFFF;
+    box-shadow: 0 0 15px #00BFFF, 0 0 30px #00BFFF;
+}
+
+/* --- FAQ Accordion --- */
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+ 
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes move-twink-back {
+    from {background-position:0 0;}
+    to {background-position:-10000px 5000px;}
+}
+
+.stars, .twinkling, .clouds {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.stars {
+  background:#000 url(https://www.script-tutorials.com/demos/360/images/stars.png) repeat top center;
+  z-index:0;
+}
+
+.twinkling{
+  background:transparent url(https://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
+  z-index:1;
+  animation:move-twink-back 200s linear infinite;
+}
+
+
