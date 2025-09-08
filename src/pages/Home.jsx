@@ -159,7 +159,7 @@ const Home = () => {
             <QuantumDotsBackground />
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                  <img 
-                    src="/assets/robo1.png" 
+                    src="/robo1.png" 
                     alt="Futuristic Robot Background" 
                     className="w-full max-w-4xl h-auto object-contain opacity-80"
                 />
@@ -209,7 +209,7 @@ const Home = () => {
             <div className="w-full lg:w-1/2 h-96 lg:h-[500px] perspective-1000">
                 <div className="relative w-full h-full transform-style-3d transition-transform duration-500 hover:rotate-y-10">
                      <div className="absolute w-full h-full rounded-2xl bg-slate-900/50 border-2 border-purple-500/30 p-2 transform-gpu">
-                        <img src="/assets/ps.png" alt="Tech event atmosphere" className="w-full h-full object-contain relative z-10" />
+                        <img src="/ps.png" alt="Tech event atmosphere" className="w-full h-full object-contain relative z-10" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/50 to-transparent"></div>
                      </div>
                 </div>

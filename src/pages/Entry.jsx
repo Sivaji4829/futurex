@@ -1,13 +1,138 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import gsap from "gsap";
+import React, { useEffect, useState, useCallback } from "react";
+import Particles from "react-tsparticles";
+import { loadSlim } from "tsparticles-slim";
 
+// --- tsparticles Background Component ---
+// --- tsparticles Background Component ---
+const ParticleBackground = () => {
+  const particlesInit = useCallback(async (engine) => {
+    await loadSlim(engine);
+  }, []);
+
+  // NEW: "Quantum Fabric" options object
+  const particlesOptions = {
+    background: {
+      color: { value: "#050816" }, // Keep the dark background
+    },
+    fpsLimit: 120, // Increased for smoother animation
+    interactivity: {
+      events: {
+        onHover: { enable: true, mode: "grab" }, // Grab mode feels like pulling the fabric
+        onClick: { enable: true, mode: "push" },
+        resize: true,
+      },
+      modes: {
+        grab: {
+          distance: 140,
+          links: {
+            opacity: 1, // Make links fully visible when grabbed
+          },
+        },
+        push: {
+          quantity: 2,
+        },
+      },
+    },
+    particles: {
+      number: {
+        value: 250, // High particle count for a dense network
+        density: { enable: true, area: 800 },
+      },
+      color: {
+        // A palette of deep violet, blue, and white for a futuristic glow
+        value: ["#8A2BE2", "#4B0082", "#00BFFF", "#FFFFFF"],
+      },
+      shape: {
+        type: "circle", // Simple circles work best for nodes
+      },
+      opacity: {
+        value: { min: 0.1, max: 0.6 }, // Subtle, shimmering opacity
+        animation: { enable: true, speed: 1, sync: false },
+      },
+      size: {
+        value: { min: 0.5, max: 1.5 }, // Very small particles for a delicate look
+      },
+      links: {
+        enable: true,
+        distance: 120, // The maximum distance for links to form
+        color: "#ffffff", // Use white for a clean, high-tech look
+        opacity: 0.3, // Low opacity for ethereal, "shimmering" lines
+        width: 1, // Ultra-fine lines
+      },
+      move: {
+        enable: true,
+        speed: 0.7, // A slow, steady drift
+        direction: "top", // Coordinated upward movement for a wave-like feel
+        random: true,
+        straight: false,
+        outModes: {
+          default: "out",
+        },
+      },
+    },
+    detectRetina: true,
+  };
+
+  return (
+    <Particles
+      id="tsparticles"
+      init={particlesInit}
+      options={particlesOptions}
+      className="absolute inset-0 w-full h-full -z-10"
+    />
+  );
+};
+// --- Countdown Timer Component ---
+const CountdownTimer = ({ targetDate }) => {
+  const calculateTimeLeft = () => {
+    const difference = +new Date(targetDate) - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    return () => clearTimeout(timer);
+  });
+
+  const timerComponents = [];
+  Object.keys(timeLeft).forEach((interval) => {
+    if (!timeLeft[interval] && timeLeft[interval] !== 0) return;
+    timerComponents.push(
+      <div key={interval} className="flex flex-col items-center">
+        <span className="text-4xl md:text-5xl font-bold font-orbitron">
+          {timeLeft[interval]}
+        </span>
+        <span className="text-sm uppercase tracking-widest text-slate-400">
+          {interval}
+        </span>
+      </div>
+    );
+  });
+
+  return (
+    <div className="flex space-x-6 md:space-x-12 text-white">
+      {timerComponents.length ? timerComponents : <span>Event has started!</span>}
+    </div>
+  );
+};
+
+// --- Main Entry Component ---
 const Entry = () => {
-  const navigate = useNavigate();
-  const vantaRef = useRef(null);
-  const titleRef = useRef(null);
-  const vantaEffect = useRef(null);
-  const [showButton, setShowButton] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("Booting cybernetic core...");
 
@@ -19,69 +144,10 @@ const Entry = () => {
   ];
 
   useEffect(() => {
-    // ✅ Vanta.js background
-    if (window.VANTA && window.THREE) {
-      vantaEffect.current = window.VANTA.NET({
-        el: vantaRef.current,
-        THREE: window.THREE,
-        mouseControls: true,
-        touchControls: true,
-        gyrocontrols: false,
-        minHeight: 200.0,
-        minWidth: 200.0,
-        scale: 1.0,
-        scaleMobile: 1.0,
-        color: 0x4f0fff,
-        backgroundColor: 0x0,
-        points: 10.0,
-        maxDistance: 22.0,
-        spacing: 17.0,
-      });
-    }
-
-    // ✅ GSAP text animation (without neon)
-    const title = titleRef.current;
-    const originalText = title.innerText;
-    title.innerHTML = "";
-
-    originalText.split("").forEach((char) => {
-      const span = document.createElement("span");
-      span.className = "inline-block";
-      span.innerHTML = char === " " ? "&nbsp;" : char;
-      title.appendChild(span);
-    });
-
-    const chars = Array.from(title.children);
-
-    gsap.set(title, { perspective: 800 });
-    gsap.set(chars, {
-      opacity: 0,
-      z: -300,
-      rotationX: -90,
-      transformOrigin: "50% 50% -150px",
-    });
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setShowButton(true); // ✅ show button after animation
-      },
-    });
-
-    tl.to(chars, {
-      duration: 1.2,
-      opacity: 1,
-      z: 0,
-      rotationX: 0,
-      stagger: 0.1,
-      ease: "power3.easeOut",
-    });
-
-    return () => {
-      if (vantaEffect.current) vantaEffect.current.destroy();
-    };
+    const timer = setTimeout(() => setShowContent(true), 500);
+    return () => clearTimeout(timer);
   }, []);
 
-  // ✅ Loading sequence
   useEffect(() => {
     if (isLoading) {
       let i = 0;
@@ -90,56 +156,88 @@ const Entry = () => {
         i++;
         if (i >= loadingMessages.length) {
           clearInterval(interval);
-          setTimeout(() => navigate("/home"), 500);
+          setTimeout(() => window.location.assign("/home"), 500);
         }
-      }, 800);
+      }, 1000);
       return () => clearInterval(interval);
     }
-  }, [isLoading, navigate]);
+  }, [isLoading]);
 
   const handleEnter = () => {
     setIsLoading(true);
   };
 
   return (
-    <div
-      ref={vantaRef}
-      className="h-screen w-screen flex flex-col items-center justify-center overflow-hidden bg-black p-4"
-    >
-      {/* Title */}
-      <div
-        className={`text-center transition-opacity duration-500 ${
-          isLoading ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        <h1
-          ref={titleRef}
-          className="text-5xl md:text-8xl font-bold text-white tracking-widest uppercase select-none"
-        >
-          FutureX 2025
-        </h1>
-      </div>
+    <div className="h-screen w-screen flex flex-col items-center justify-center overflow-hidden relative p-4 bg-grid">
+      {/* --- NEW: Animated Background Layers --- */}
+      <div className="stars"></div>
+      <div className="twinkling"></div>
+      <div className="scanlines"></div>
 
-      {/* Button */}
+      {/* Particle Background */}
+      <ParticleBackground />
+
+      {/* Main Content */}
       <div
-        className={`transition-opacity duration-500 mt-12 ${
-          !showButton || isLoading
-            ? "opacity-0 pointer-events-none"
-            : "opacity-100"
+        className={`relative z-10 flex flex-col items-center justify-center transition-all duration-700 ${
+          showContent && !isLoading
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-5 pointer-events-none"
         }`}
       >
+        <div className="flex items-center mb-12">
+          <h1
+            className="text-5xl md:text-8xl font-bold tracking-widest uppercase text-slate-300 text-flicker-in-glow" // <-- Class added
+            style={{ fontFamily: "'Exo 2', sans-serif" }}
+          >
+            FUTURE
+          </h1>
+          <div className="relative mx-2">
+            <svg
+              className="w-24 h-24 md:w-40 md:h-40 text-cyan-400"
+              viewBox="0 0 100 100"
+            >
+              <path
+                d="M10 10 L90 90 M90 10 L10 90"
+                stroke="currentColor"
+                strokeWidth="5"
+                fill="none"
+              />
+              <path
+                d="M10 10 L90 90 M90 10 L10 90"
+                stroke="currentColor"
+                strokeWidth="10"
+                fill="none"
+                strokeOpacity="0.3"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-cyan-400 rounded-full animate-ping"></div>
+            </div>
+          </div>
+          <h1
+            className="text-5xl md:text-8xl font-bold tracking-widest uppercase text-slate-300 text-flicker-in-glow" // <-- Class added
+            style={{ fontFamily: "'Exo 2', sans-serif" }}
+          >
+            2025
+          </h1>
+        </div>
+
+        <div className="mb-12">
+          <CountdownTimer targetDate="2025-10-08T00:00:00" />
+        </div>
+
         <button
           onClick={handleEnter}
-          disabled={!showButton || isLoading}
-          className="px-8 py-3 bg-cyan-500 text-black font-bold rounded-lg uppercase tracking-widest transition-all duration-300 hover:bg-cyan-600 hover:text-white shadow-lg disabled:opacity-50"
+          className="px-8 py-3 border-2 border-cyan-400 text-cyan-400 font-bold rounded-full uppercase tracking-widest transition-all duration-300 hover:bg-cyan-400 hover:text-black neon-shadow"
         >
           Press Here to Enter
         </button>
       </div>
 
-      {/* Loading spinner + text */}
+      {/* Loading Animation */}
       {isLoading && (
-        <div className="absolute flex flex-col items-center justify-center text-center">
+        <div className="absolute z-20 flex flex-col items-center justify-center text-center">
           <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-purple-500 mb-6"></div>
           <p className="text-cyan-300 text-xl tracking-widest transition-opacity duration-300">
             {loadingText}
