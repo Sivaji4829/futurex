@@ -1,6 +1,47 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
+
+// --- SVG Icons ---
+const ArrowRightIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+  </svg>
+);
+const TimeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+);
+const PlusIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+    </svg>
+);
+// --- Icons for Info Section ---
+const VenueIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mb-3 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+);
+const DurationIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mb-3 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+);
+const CapacityIcon = () => (
+     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mb-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+);
+const RegistrationIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mb-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+);
+
+
 
 // --- New 3D Quantum Dots Background Component ---
 const QuantumDotsBackground = () => {
@@ -87,22 +128,6 @@ const QuantumDotsBackground = () => {
 };
 
 
-// SVG Icons
-const ArrowRightIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-  </svg>
-);
-const TimeIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-);
-const PlusIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-    </svg>
-)
 
 // Carousel slides data
 const carouselData = [
@@ -139,6 +164,30 @@ const faqs = [
     { q: "Is there a code of conduct?", a: "Yes, all attendees must adhere to our community guidelines." },
     { q: "Who can attend?", a: "Students, professionals, and tech enthusiasts are welcome." },
 ]
+
+// Info Bar Data
+const infoItems = [
+    {
+        icon: <VenueIcon />,
+        title: "Venue",
+        text: "Chalapathi Institute of Technology, Mothadaka, Guntur, Andhra Pradesh"
+    },
+    {
+        icon: <DurationIcon />,
+        title: "Duration",
+        text: "October 8-10, 2025"
+    },
+    {
+        icon: <CapacityIcon />,
+        title: "Attendees",
+        text: "5000+ Expected"
+    },
+    {
+        icon: <RegistrationIcon />,
+        title: "Registration",
+        text: "Open Now!"
+    }
+];
 
 const Home = () => {
   const navigate = useNavigate();
@@ -229,7 +278,20 @@ const Home = () => {
             </div>
         </div>
       </section>
-
+{/* New Info Bar Section */}
+       <section className="py-12 px-4 container mx-auto">
+            <div className="bg-slate-900/50 backdrop-blur-md border border-cyan-500/20 rounded-2xl shadow-lg p-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    {infoItems.map((item, index) => (
+                        <div key={index} className="flex flex-col items-center">
+                            {item.icon}
+                            <h3 className="font-bold text-lg text-white mb-1">{item.title}</h3>
+                            <p className="text-slate-400 text-sm">{item.text}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+       </section>
       {/* Featured Events Section */}
       <section className="container mx-auto px-4 py-24">
         <h2 className="text-4xl text-center font-bold mb-16 font-orbitron bg-gradient-to-r from-cyan-300 to-fuchsia-500 text-transparent bg-clip-text">Event Timeline</h2>
@@ -284,4 +346,3 @@ const Home = () => {
 };
 
 export default Home;
-

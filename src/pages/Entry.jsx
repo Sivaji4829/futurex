@@ -1,141 +1,147 @@
-import React, { useEffect, useState, useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadSlim } from "tsparticles-slim";
+import React, { useEffect, useState, useRef } from "react";
+import * as THREE from "three";
 
-// --- tsparticles Background Component ---
-// --- tsparticles Background Component ---
-const ParticleBackground = () => {
-  const particlesInit = useCallback(async (engine) => {
-    await loadSlim(engine);
+// --- Quantum Dots Background ---
+const QuantumDotsBackground = () => {
+  const mountRef = useRef(null);
+
+  useEffect(() => {
+    const currentMount = mountRef.current;
+    let scene, camera, renderer, points;
+    let mouseX = 0,
+      mouseY = 0;
+
+    const init = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(
+        75,
+        currentMount.clientWidth / currentMount.clientHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 50;
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      currentMount.appendChild(renderer.domElement);
+
+      const geometry = new THREE.BufferGeometry();
+      const vertices = [];
+      const numPoints = 1500;
+
+      for (let i = 0; i < numPoints; i++) {
+        const x = (Math.random() - 0.5) * 100;
+        const y = (Math.random() - 0.5) * 100;
+        const z = (Math.random() - 0.5) * 100;
+        vertices.push(x, y, z);
+      }
+
+      geometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(vertices, 3)
+      );
+
+      const material = new THREE.PointsMaterial({
+        color: 0x854ce6,
+        size: 0.2,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      points = new THREE.Points(geometry, material);
+      scene.add(points);
+
+      animate();
+    };
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      camera.position.x += (mouseX * 0.05 - camera.position.x) * 0.05;
+      camera.position.y += (-mouseY * 0.05 - camera.position.y) * 0.05;
+      camera.lookAt(scene.position);
+
+      points.rotation.y += 0.0005;
+
+      renderer.render(scene, camera);
+    };
+
+    const onMouseMove = (event) => {
+      mouseX = event.clientX - window.innerWidth / 2;
+      mouseY = event.clientY - window.innerHeight / 2;
+    };
+
+    const onResize = () => {
+      camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+    };
+
+    init();
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("resize", onResize);
+      if (renderer) currentMount.removeChild(renderer.domElement);
+    };
   }, []);
 
-  // NEW: "Quantum Fabric" options object
-  const particlesOptions = {
-    background: {
-      color: { value: "#050816" }, // Keep the dark background
-    },
-    fpsLimit: 120, // Increased for smoother animation
-    interactivity: {
-      events: {
-        onHover: { enable: true, mode: "grab" }, // Grab mode feels like pulling the fabric
-        onClick: { enable: true, mode: "push" },
-        resize: true,
-      },
-      modes: {
-        grab: {
-          distance: 140,
-          links: {
-            opacity: 1, // Make links fully visible when grabbed
-          },
-        },
-        push: {
-          quantity: 2,
-        },
-      },
-    },
-    particles: {
-      number: {
-        value: 250, // High particle count for a dense network
-        density: { enable: true, area: 800 },
-      },
-      color: {
-        // A palette of deep violet, blue, and white for a futuristic glow
-        value: ["#8A2BE2", "#4B0082", "#00BFFF", "#FFFFFF"],
-      },
-      shape: {
-        type: "circle", // Simple circles work best for nodes
-      },
-      opacity: {
-        value: { min: 0.1, max: 0.6 }, // Subtle, shimmering opacity
-        animation: { enable: true, speed: 1, sync: false },
-      },
-      size: {
-        value: { min: 0.5, max: 1.5 }, // Very small particles for a delicate look
-      },
-      links: {
-        enable: true,
-        distance: 120, // The maximum distance for links to form
-        color: "#ffffff", // Use white for a clean, high-tech look
-        opacity: 0.3, // Low opacity for ethereal, "shimmering" lines
-        width: 1, // Ultra-fine lines
-      },
-      move: {
-        enable: true,
-        speed: 0.7, // A slow, steady drift
-        direction: "top", // Coordinated upward movement for a wave-like feel
-        random: true,
-        straight: false,
-        outModes: {
-          default: "out",
-        },
-      },
-    },
-    detectRetina: true,
-  };
-
-  return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={particlesOptions}
-      className="absolute inset-0 w-full h-full -z-10"
-    />
-  );
+  return <div ref={mountRef} className="absolute inset-0 w-full h-full -z-10" />;
 };
-// --- Countdown Timer Component ---
+
+// --- Countdown Timer ---
 const CountdownTimer = ({ targetDate }) => {
   const calculateTimeLeft = () => {
     const difference = +new Date(targetDate) - +new Date();
-    let timeLeft = {};
-
     if (difference > 0) {
-      timeLeft = {
+      return {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
         seconds: Math.floor((difference / 1000) % 60),
       };
     }
-    return timeLeft;
+    return {};
   };
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
-    return () => clearTimeout(timer);
-  });
-
-  const timerComponents = [];
-  Object.keys(timeLeft).forEach((interval) => {
-    if (!timeLeft[interval] && timeLeft[interval] !== 0) return;
-    timerComponents.push(
-      <div key={interval} className="flex flex-col items-center">
-        <span className="text-4xl md:text-5xl font-bold font-orbitron">
-          {timeLeft[interval]}
-        </span>
-        <span className="text-sm uppercase tracking-widest text-slate-400">
-          {interval}
-        </span>
-      </div>
-    );
-  });
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="flex space-x-6 md:space-x-12 text-white">
-      {timerComponents.length ? timerComponents : <span>Event has started!</span>}
+      {Object.keys(timeLeft).length > 0 ? (
+        Object.entries(timeLeft).map(([interval, value]) => (
+          <div key={interval} className="flex flex-col items-center">
+            <span className="text-4xl md:text-5xl font-light">
+              {String(value).padStart(2, "0")}
+            </span>
+            <span className="text-xs uppercase tracking-widest text-slate-400">
+              {interval}
+            </span>
+          </div>
+        ))
+      ) : (
+        <span className="text-xl">Event has started!</span>
+      )}
     </div>
   );
 };
 
-// --- Main Entry Component ---
+// --- Main Entry ---
 const Entry = () => {
   const [showContent, setShowContent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("Booting cybernetic core...");
-
   const loadingMessages = [
     "Initializing neural networks...",
     "Compiling quantum bits...",
@@ -156,92 +162,65 @@ const Entry = () => {
         i++;
         if (i >= loadingMessages.length) {
           clearInterval(interval);
-          setTimeout(() => window.location.assign("/home"), 500);
+          setTimeout(() => (window.location.href = "/home"), 500);
         }
       }, 1000);
       return () => clearInterval(interval);
     }
   }, [isLoading]);
 
-  const handleEnter = () => {
-    setIsLoading(true);
-  };
+  const handleEnter = () => setIsLoading(true);
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center overflow-hidden relative p-4 bg-grid">
-      {/* --- NEW: Animated Background Layers --- */}
-      <div className="stars"></div>
-      <div className="twinkling"></div>
-      <div className="scanlines"></div>
+    <div className="h-screen w-screen flex flex-col items-center justify-center overflow-hidden relative p-4">
+      <QuantumDotsBackground />
 
-      {/* Particle Background */}
-      <ParticleBackground />
-
-      {/* Main Content */}
       <div
-        className={`relative z-10 flex flex-col items-center justify-center transition-all duration-700 ${
-          showContent && !isLoading
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-5 pointer-events-none"
+        className={`relative z-10 flex flex-col items-center transition-all duration-700 ${
+          showContent && !isLoading ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex items-center mb-12">
+        <div className="flex items-center justify-center mb-16">
           <h1
-            className="text-5xl md:text-8xl font-bold tracking-widest uppercase text-slate-300 text-flicker-in-glow" // <-- Class added
-            style={{ fontFamily: "'Exo 2', sans-serif" }}
+            className="text-6xl md:text-8xl font-bold text-slate-200"
+            style={{ fontFamily: "'Orbitron', sans-serif" }}
           >
             FUTURE
           </h1>
-          <div className="relative mx-2">
-            <svg
-              className="w-24 h-24 md:w-40 md:h-40 text-cyan-400"
-              viewBox="0 0 100 100"
-            >
-              <path
-                d="M10 10 L90 90 M90 10 L10 90"
-                stroke="currentColor"
-                strokeWidth="5"
-                fill="none"
-              />
-              <path
-                d="M10 10 L90 90 M90 10 L10 90"
-                stroke="currentColor"
-                strokeWidth="10"
-                fill="none"
-                strokeOpacity="0.3"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 md:w-12 md:h-12 bg-cyan-400 rounded-full animate-ping"></div>
-            </div>
-          </div>
+          <span
+            className="text-8xl md:text-9xl font-bold text-red-500 mx-4"
+            style={{
+              fontFamily: "'Aldrich', sans-serif",
+              transform: "skewX(-15deg)",
+              textShadow: "0 0 10px #ff4545, 0 0 20px #ff4545",
+            }}
+          >
+            X
+          </span>
           <h1
-            className="text-5xl md:text-8xl font-bold tracking-widest uppercase text-slate-300 text-flicker-in-glow" // <-- Class added
-            style={{ fontFamily: "'Exo 2', sans-serif" }}
+            className="text-6xl md:text-8xl font-bold text-slate-200"
+            style={{ fontFamily: "'Orbitron', sans-serif" }}
           >
             2025
           </h1>
         </div>
 
-        <div className="mb-12">
+        <div className="mb-16">
           <CountdownTimer targetDate="2025-10-08T00:00:00" />
         </div>
 
         <button
           onClick={handleEnter}
-          className="px-8 py-3 border-2 border-cyan-400 text-cyan-400 font-bold rounded-full uppercase tracking-widest transition-all duration-300 hover:bg-cyan-400 hover:text-black neon-shadow"
+          className="px-10 py-3 border-2 border-red-500 text-red-400 font-bold rounded-md uppercase tracking-widest text-sm hover:bg-red-500/20 hover:text-white animate-pulse"
         >
           Press Here to Enter
         </button>
       </div>
 
-      {/* Loading Animation */}
       {isLoading && (
-        <div className="absolute z-20 flex flex-col items-center justify-center text-center">
-          <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-purple-500 mb-6"></div>
-          <p className="text-cyan-300 text-xl tracking-widest transition-opacity duration-300">
-            {loadingText}
-          </p>
+        <div className="absolute z-20 flex flex-col items-center justify-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-red-500 mb-6"></div>
+          <p className="text-cyan-300 text-xl">{loadingText}</p>
         </div>
       )}
     </div>
