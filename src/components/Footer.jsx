@@ -87,10 +87,11 @@ const Footer = () => {
               >
                 
                 <InstagramIcon />
-              </a>
+             
               <h2 style={{ fontWeight: 'bold', fontSize: '25px', color: '#E1306C', margin: 0 }}>
   Instagram
 </h2>
+ </a>
 
             </div>
           </div>
