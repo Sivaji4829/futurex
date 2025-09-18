@@ -12,7 +12,7 @@ function App() {
   const isEntryPage = location.pathname === '/';
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen">
       {!isEntryPage && <Navbar />}
       <main>
         <Routes>

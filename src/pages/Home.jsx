@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
 
+
 // --- SVG Icons ---
 const ArrowRightIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -152,10 +153,15 @@ const carouselData = [
 ];
 
 // Featured events data
-const featuredEvents = [
-  { time: "10:00 AM", title: "AI Art Contest", description: "Where creativity meets artificial intelligence." },
-  { time: "11:30 AM", title: "Robotics Challenge", description: "Build, battle, and conquer with code." },
-  { time: "01:00 PM", title: "Beat-the-AI Quiz", description: "Test your wits against the machine." },
+const timelineEvents = [
+  { day: 'Day 1', title: 'VR Fun Zone', description: 'Immersive VR games and simulations.' },
+  { day: 'Day 1', title: 'Tech Talks', description: 'Engaging talks from industry experts.' },
+  { day: 'Day 1', title: 'Cinematic Odyssey', description: 'Filmmaking and video editing challenge.' },
+  { day: 'Day 1 & 2', title: 'Project Expo', description: 'Showcase of innovative student projects.' },
+  { day: 'Day 1 & 2', title: 'Vision X – AI Art', description: 'Create stunning art with AI tools.' },
+  { day: 'Day 1 & 2', title: 'Decode and Discover', description: 'Interactive QR code puzzle game.' },
+  { day: 'Day 2', title: 'Escape from Error Island', description: 'Exciting debugging challenges.' },
+  { day: 'Day 2', title: 'Humanoid Robot Talent Show', description: 'Q&A with a humanoid robot.' },
 ];
 
 const faqs = [
@@ -175,7 +181,7 @@ const infoItems = [
     {
         icon: <DurationIcon />,
         title: "Duration",
-        text: "October 8-10, 2025"
+        text: "October 17-18, 2025"
     },
     {
         icon: <CapacityIcon />,
@@ -252,7 +258,7 @@ const Home = () => {
       </section>
 
       {/* About Section */}
-       <section className="py-24 px-4 container mx-auto">
+       <section id="about-section" className="py-24 px-4 container mx-auto">
         <div className="relative flex flex-col lg:flex-row items-center gap-12">
             {/* 3D Container */}
             <div className="w-full lg:w-1/2 h-96 lg:h-[500px] perspective-1000">
@@ -278,50 +284,65 @@ const Home = () => {
             </div>
         </div>
       </section>
-{/* New Info Bar Section */}
-       <section className="py-12 px-4 container mx-auto">
-            <div className="bg-slate-900/50 backdrop-blur-md border border-cyan-500/20 rounded-2xl shadow-lg p-8">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    {infoItems.map((item, index) => (
-                        <div key={index} className="flex flex-col items-center">
-                            {item.icon}
-                            <h3 className="font-bold text-lg text-white mb-1">{item.title}</h3>
-                            <p className="text-slate-400 text-sm">{item.text}</p>
+ 
+ {/* New Info Bar Section */}
+       <section className="py-16 px-6 container mx-auto">
+  <div className="bg-slate-900/50 backdrop-blur-md border border-cyan-500/20 rounded-3xl shadow-2xl p-10 transition-all duration-300 hover:shadow-cyan-500/10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+      {infoItems.map((item, index) => (
+        <div
+          key={index}
+          className="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-800/40 hover:scale-105 transition-transform duration-300 cursor-pointer group"
+        >
+          <div className="mb-4 text-cyan-400 group-hover:text-fuchsia-400 transition-colors duration-300">
+            {item.icon}
+          </div>
+          <h3 className="font-orbitron font-bold text-xl text-white mb-2 tracking-wide">
+            {item.title}
+          </h3>
+          <p className="text-slate-400 text-sm leading-relaxed">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+       
+      {/* --- Redesigned Event Timeline Section --- */}
+      <section className="py-24 container mx-auto px-4">
+        <h1 className="text-4xl text-center font-bold mb-16 font-orbitron bg-gradient-to-r from-cyan-300 to-fuchsia-500 text-transparent bg-clip-text">Event Timeline</h1>
+        <div className="relative w-full">
+            {/* The wavy path SVG */}
+            <svg width="100%" height="200" viewBox="0 0 1200 200" preserveAspectRatio="none" className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-auto">
+                <path d="M0,100 C200,0 400,200 600,100 C800,0 1000,200 1200,100" stroke="#22d3ee" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+            </svg>
+
+            <div className="relative flex flex-col md:flex-row justify-between items-center w-full">
+                {timelineEvents.map((event, index) => {
+                    const isEven = index % 2 === 0;
+                    return(
+                        <div key={index} className={`w-full md:w-1/8 flex flex-col items-center p-4 group`}>
+                             <div className={`order-2 ${isEven ? 'md:order-1' : 'md:order-3'} text-center mt-4 md:mt-0`}>
+                                <h3 className="font-bold text-white text-lg">{event.title}</h3>
+                                <p className="text-sm text-slate-400">{event.description}</p>
+                            </div>
+                            <div className={`order-1 ${isEven ? 'md:order-2 md:mb-4' : 'md:order-2 md:mt-4'} w-8 h-8 rounded-full bg-cyan-400 border-2 border-slate-900 flex items-center justify-center transition-all duration-300 group-hover:scale-125 shadow-lg shadow-cyan-500/50`}>
+                                <span className="text-xs font-bold text-black">{index+1}</span>
+                            </div>
+                            <div className={`order-3 ${isEven ? 'md:order-3' : 'md:order-1'} text-center md:hidden`}>
+                                 <p className="text-purple-400 text-sm">{event.day}</p>
+                            </div>
                         </div>
-                    ))}
-                </div>
+                    )
+                })}
             </div>
-       </section>
-      {/* Featured Events Section */}
-      <section className="container mx-auto px-4 py-24">
-        <h2 className="text-4xl text-center font-bold mb-16 font-orbitron bg-gradient-to-r from-cyan-300 to-fuchsia-500 text-transparent bg-clip-text">Event Timeline</h2>
-        <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-1/2 top-0 h-full w-0.5 bg-slate-700/50 -translate-x-1/2"></div>
-            {featuredEvents.map((event, index) => (
-                <div key={index} className={`flex items-center w-full mb-8 ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
-                    <div className="w-1/2 px-4">
-                        <div className={`text-right ${index % 2 !== 0 && 'md:hidden'}`}>
-                            <p className="text-purple-400 font-semibold">{event.time}</p>
-                        </div>
-                    </div>
-                    <div className="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-slate-800 border-2 border-cyan-400 rounded-full z-10 flex items-center justify-center">
-                        <div className="w-3 h-3 bg-cyan-400 rounded-full"></div>
-                    </div>
-                    <div className="w-1/2 px-4">
-                        <div className={`bg-slate-900/50 p-6 rounded-2xl border border-purple-400/20 backdrop-blur-sm ${index % 2 === 0 ? 'text-left' : 'text-right'}`}>
-                            <p className={`text-purple-400 font-semibold mb-2 ${index % 2 === 0 ? 'md:hidden' : ''}`}>{event.time}</p>
-                            <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
-                            <p className="text-slate-400 text-sm">{event.description}</p>
-                        </div>
-                    </div>
-                </div>
-            ))}
         </div>
       </section>
 
+
       {/* FAQ Section */}
       <section className="container mx-auto px-4 py-24">
+        
         <h2 className="text-4xl text-center font-bold mb-16 font-orbitron bg-gradient-to-r from-cyan-300 to-fuchsia-500 text-transparent bg-clip-text">Frequently Asked Questions</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>

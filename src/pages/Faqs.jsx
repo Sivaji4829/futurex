@@ -18,7 +18,7 @@ const faqData = [
       },
       {
         q: "What are the official dates and timings?",
-        a: "FutureX 2025 will be held on October 8th and 9th, from 9:00 AM to 6:00 PM on both days. Specific event timings can be found on the Events page."
+        a: "FutureX 2025 will be held on October 17th and 18th, from 9:00 AM to 5:00 PM on both days. Specific event timings can be found on the Events page."
       },
       {
         q: "Where is the event located?",
@@ -36,15 +36,11 @@ const faqData = [
       },
       {
         q: "Is there a registration fee?",
-        a: "Yes, there is a nominal registration fee which covers access to the main expo and select non-competitive events. Most competitions have their own separate participation fees, which are listed on the Events page."
+        a: "No, there is no nominal registration fee which covers access to the main expo and select non-competitive events."
       },
       {
         q: "Can I register for multiple events?",
         a: "Absolutely! You are encouraged to participate in as many events as you like. Please check the event schedule to ensure there are no timing conflicts between your chosen competitions."
-      },
-      {
-        q: "What payment methods are accepted?",
-        a: "We accept all major online payment methods, including UPI, credit/debit cards, and net banking through our secure payment gateway linked in the registration form."
       }
     ]
   },
@@ -58,7 +54,7 @@ const faqData = [
       },
       {
         q: "Do I need to bring my own laptop or equipment?",
-        a: "For most coding and design events, participants are required to bring their own laptops. For specialized events like the VR Fun Zone or Robotics, all necessary equipment will be provided. Please check the specific rules for each event you register for."
+        a: "For most coding and design events, participants are encouraged to bring their own laptops if they cant no worries. For specialized events like the VR Fun Zone or Robotics, all necessary equipment will be provided."
       },
       {
         q: "Can I participate in a team?",
@@ -66,7 +62,7 @@ const faqData = [
       },
       {
         q: "What are the prizes?",
-        a: "We have a prize pool of over 50+ awards, including cash prizes, certificates, tech gadgets, and internship opportunities with our partner companies. Winners for each competition will be announced during the closing ceremony."
+        a: "We have a prize pool, including cash prizes, certificates, and much more. Winners for each competition will be announced during the closing ceremony."
       }
     ]
   },
@@ -76,7 +72,7 @@ const faqData = [
     questions: [
       {
         q: "Will food and beverages be available at the venue?",
-        a: "Yes, there will be multiple food courts and stalls available throughout the campus, offering a variety of food and beverage options for purchase."
+        a: "Yes, there will be food and beverages available throughout the campus, offering a variety of food and beverage options for purchase."
       },
       {
         q: "Is there parking available?",
@@ -84,7 +80,7 @@ const faqData = [
       },
       {
         q: "Is accommodation provided for out-of-station participants?",
-        a: "While we do not directly provide accommodation, we have partnered with nearby hotels and hostels to offer discounts for FutureX attendees. A list of recommendations will be provided upon successful registration."
+        a: "Yes, We will provide accommodation with minimum charges."
       },
       {
         q: "Who do I contact if I have an issue during the event?",

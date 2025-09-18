@@ -146,7 +146,7 @@ const Entry = () => {
     "Initializing neural networks...",
     "Compiling quantum bits...",
     "Generating digital world...",
-    "Welcome to the Future...",
+    "Welcome to the Future X 2025...",
   ];
 
   useEffect(() => {
@@ -206,7 +206,7 @@ const Entry = () => {
         </div>
 
         <div className="mb-16">
-          <CountdownTimer targetDate="2025-10-08T00:00:00" />
+          <CountdownTimer targetDate="2025-10-17T00:00:00" />
         </div>
 
         <button
