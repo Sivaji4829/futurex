@@ -154,14 +154,14 @@ const carouselData = [
 
 // Featured events data
 const timelineEvents = [
-  { day: 'Day 1', title: 'VR Fun Zone', description: 'Immersive VR games and simulations.' },
-  { day: 'Day 1', title: 'Tech Talks', description: 'Engaging talks from industry experts.' },
-  { day: 'Day 1', title: 'Cinematic Odyssey', description: 'Filmmaking and video editing challenge.' },
+  { day: 'Day 1 & 2', title: 'VR Fun Zone', description: 'Immersive VR games and simulations.' },
+  { day: 'Day 2', title: 'Tech Talks', description: 'Engaging talks from industry experts.' },
+  { day: 'Day 2', title: 'Cinematic Odyssey', description: 'Filmmaking and video editing challenge.' },
   { day: 'Day 1 & 2', title: 'Project Expo', description: 'Showcase of innovative student projects.' },
-  { day: 'Day 1 & 2', title: 'Vision X – AI Art', description: 'Create stunning art with AI tools.' },
+  { day: 'Day 2', title: 'Vision X – AI Art', description: 'Create stunning art with AI tools.' },
   { day: 'Day 1 & 2', title: 'Decode and Discover', description: 'Interactive QR code puzzle game.' },
-  { day: 'Day 2', title: 'Escape from Error Island', description: 'Exciting debugging challenges.' },
-  { day: 'Day 2', title: 'Humanoid Robot Talent Show', description: 'Q&A with a humanoid robot.' },
+  { day: 'Day 1', title: 'Escape from Error Island', description: 'Exciting debugging challenges.' },
+  { day: 'Day 1 & 2', title: 'Robot Talent Show', description: 'Q&A with a humanoid robot.' },
 ];
 
 const faqs = [
