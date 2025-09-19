@@ -124,7 +124,7 @@ const Footer = () => {
               <div className="h-full flex flex-col justify-center">
                 <h4 className="font-bold text-lg text-white mb-2">Student Coordinators:</h4>
                 <ul className="text-slate-300 space-y-2">
-                  <li>V. Sumanohar Reddy – 9652834455</li>
+                  <li>Y. Sai Gopi – 8522024911</li>
                   <li>B. Venkata Pullarao – 7075690738</li>
                 </ul>
                 <h4 className="font-bold text-lg text-white mt-6 mb-2">General Inquiries:</h4>

@@ -265,7 +265,7 @@ const EventDetail = ({ event, onClose, initialTab = 'About' }) => {
                         {/* <p className="text-slate-300 mb-4">For event-specific inquiries, please contact:<br/> {Array.isArray(event.contact) ? event.contact.join(', ') : event.contact}</p> */}
                         <h4 className="text-lg font-bold text-cyan-300 mt-6 mb-2">Student Coordinators</h4>
                         <ul className="text-slate-300">
-                            <li>V. Sumanohar Reddy – 9652834455</li>
+                            <li>Y. Sai Gopi – 8522024911</li>
                             <li>B. Venkata Pullarao – 7075690738</li>
                         </ul>
                     </div>
