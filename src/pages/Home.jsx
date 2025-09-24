@@ -181,7 +181,7 @@ const infoItems = [
     {
         icon: <DurationIcon />,
         title: "Duration",
-        text: "October 17-18, 2025"
+        text: "October 14-15, 2025"
     },
     {
         icon: <CapacityIcon />,

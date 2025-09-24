@@ -46,7 +46,7 @@ const eventsData = [
     tagline: 'Innovate, Exhibit, Inspire.',
     image: '/pe.png',
     contact: 'expo@futurex.com',
-    timeline: 'DAY 1 Event - October 17, 2025 | Full Day',
+    timeline: 'DAY 1 Event - October 14, 2025 | Full Day',
     teamSize: 'Solo or Team (2-3 members)',
     description: 'Project Expo is a platform for students to showcase innovative projects, prototypes, and ideas across various fields of technology and engineering.',
     structure: [
@@ -63,7 +63,7 @@ const eventsData = [
     tagline: 'Where Technology Meets Communication.',
     image: '/tt.png',
     contact: 'techtalks@futurex.com',
-    timeline: 'DAY-2 Event - October 18, 2025 | 11:00 AM - 1:00 PM',
+    timeline: 'DAY-2 Event - October 15, 2025 | 11:00 AM - 1:00 PM',
     teamSize: 'Individual',
     description: "Tech Talks is an engaging event designed to test participants’ communication, presentation, and technical knowledge. Each participant will be given a topic and must present their views within 5 minutes.",
     structure: [
@@ -81,7 +81,7 @@ const eventsData = [
     tagline: 'Experience Reality, Redefined.',
     image: '/vr.png', 
     contact: 'Faculty Co-Ordinator: Mrs.D.Roja',
-    timeline: 'October 17-18, 2025 | Full Day',
+    timeline: 'October 14-15, 2025 | Full Day',
     teamSize: 'Individual',
     description: 'VR Fun Zone is an exclusive event designed to showcase the exciting possibilities of Virtual Reality. Participants will experience immersive VR games, interactive simulations, and cutting-edge digital environments that blend entertainment with innovation.',
     structure: [
@@ -97,7 +97,7 @@ const eventsData = [
     tagline: 'Create. Edit. Captivate.',
     image: '/co.png',
     contact: 'cinema@futurex.com',
-    timeline: 'DAY-2 Event - October 18, 2025',
+    timeline: 'DAY-2 Event - October 15, 2025',
     teamSize: 'Individual or Team (up to 4)',
     description: 'A filmmaking and video editing challenge where creativity meets storytelling. Participants must capture their own raw video footage based on a theme provided and craft a 2–5 minute video.',
     structure: [
@@ -117,7 +117,7 @@ const eventsData = [
     tagline: 'Where Technology Meets Imagination.',
     image: '/vx.png',
     contact: 'visionx@futurex.com',
-    timeline: 'DAY-2 Event - October 18, 2025',
+    timeline: 'DAY-2 Event - October 15, 2025',
     teamSize: 'Individual',
     description: 'Participants will be given a topic on the spot and must generate an AI artwork within 15 minutes using any AI art tool of their choice.',
     structure: [
@@ -135,7 +135,7 @@ const eventsData = [
     tagline: 'Find the bug... Escape the island.',
     image: '/ei.png',
     contact: 'debugging@futurex.com',
-    timeline: 'DAY 1 Event - October 17, 2025 | 3 Rounds',
+    timeline: 'DAY 1 Event - October 14, 2025 | 3 Rounds',
     teamSize: 'Individual',
     description: 'An exciting coding challenge where participants test their debugging and problem-solving skills across 3 rounds of increasing difficulty.',
     structure: [
@@ -152,7 +152,7 @@ const eventsData = [
     tagline: 'The Ultimate QR Code Challenge.',
     image: '/dad.png',
     contact: 'puzzle@futurex.com',
-    timeline: 'October 17-18, 2025 | Timed Heats',
+    timeline: 'October 14-15, 2025 | Timed Heats',
     teamSize: 'Individual',
     description: 'An interactive QR code puzzle game where participants must identify and reconstruct the correct QR code from several cut pieces.',
     structure: [

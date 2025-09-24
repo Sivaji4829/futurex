@@ -18,7 +18,7 @@ const faqData = [
       },
       {
         q: "What are the official dates and timings?",
-        a: "FutureX 2025 will be held on October 17th and 18th, from 9:00 AM to 5:00 PM on both days. Specific event timings can be found on the Events page."
+        a: "FutureX 2025 will be held on October 14th and 15th, from 9:00 AM to 5:00 PM on both days. Specific event timings can be found on the Events page."
       },
       {
         q: "Where is the event located?",
