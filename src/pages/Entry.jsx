@@ -188,7 +188,7 @@ const Entry = () => {
         </div>
 
         <div className="mb-10 sm:mb-16">
-          <CountdownTimer targetDate="2025-10-17T00:00:00" />
+          <CountdownTimer targetDate="2025-10-14T00:00:00" />
         </div>
 
         <button
